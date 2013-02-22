@@ -14,3 +14,6 @@
 
 (defmacro create-rectangle (x y width height)
   `(make-instance 'rectangle :x ,x :y ,y :width ,width :height ,height))
+
+(defmethod print-object ((rect rectangle) stream)
+  (format stream "(~a, ~a, ~a, ~a)" (x rect) (y rect) (width rect) (height rect)))
