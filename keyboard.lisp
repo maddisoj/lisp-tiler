@@ -8,8 +8,8 @@
     :initarg :callback
     :initform nil)))
 
-(defmacro create-key-binding (key callback)
-  `(make-instance 'key-binding :key ,key :callback ,callback))
+(defun create-key-binding (key callback)
+  (make-instance 'key-binding :key key :callback callback))
 
 (defun add-key-binding ((kb key-binding))
   (push kb *key-bindings*))

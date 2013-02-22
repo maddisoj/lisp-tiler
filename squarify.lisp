@@ -116,8 +116,3 @@
       finally (setf result-rects (nconc result-rects (layout r rect)))
               (return-from squarify result-rects)
       end)))
-
-(let ((areas (list 1 2 3)))
-  (scale areas 2)
-  (dolist (rect (squarify areas (create-rectangle 0 0 100 100)))
-    (print-object rect t)))
