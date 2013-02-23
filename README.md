@@ -26,4 +26,4 @@ Here is the calculated rectangles:
 ```
 
 And here is what it looks like visually:
-[alt visual example][https://raw.github.com/lerp/lisp-tiler/master/example.png]
+![alt visual example](https://raw.github.com/lerp/lisp-tiler/master/example.png)
