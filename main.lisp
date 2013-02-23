@@ -8,9 +8,9 @@
 (require "squarify.lisp")
 (require "rectangle.lisp")
 
-(defconstant *window-width* 800)
-(defconstant *window-height* 600)
-(defconstant *areas* (list 10 20 30 40 50 60 70 80 90 100))
+(defconstant *window-width* 200)
+(defconstant *window-height* 200)
+(defconstant *areas* (list 100 200 300 400))
 (defparameter *rects* (squarify *areas* (create-rectangle 0 0 *window-width* *window-height*)))
 
 (defclass tiler-window (glut:window)

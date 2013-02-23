@@ -12,9 +12,11 @@
              :accessor max-area)
    (areas :initarg :areas
           :initform '()
-          :accessor areas)))
+          :accessor areas))
+  (:documentation "A class to keep all the information about the current row in one place"))
 
 (defun add-to-row (area (r row))
+  "Adds the area to the given row and updates the row's metadata"
   (push area (areas r))
   (if (eql (min-area r) nil)
     (setf (min-area r) area)
@@ -24,9 +26,14 @@
     (setf (max-area r) (max (max-area r) area)))
   (incf (area r) area))
 
-(defun recalc-min-max-area ((r row)))
+(defun recalc-min-max-area ((r row))
+  "Recalculates the minimum and maximum areas of the given row"
+  (dolist (area (areas r))
+    (setf (min-area r) (min (min-area r) area))
+    (setf (max-area r) (max (max-area r) area))))
 
 (defun remove-last ((r row))
+  "Removes the last area from the given row and updates the row's metadata"
   (let ((area (pop (areas r))))
     (when (or (eql (min-area r) area)
               (eql (max-area r) area)
@@ -34,6 +41,7 @@
     (decf (area r) area)))
 
 (defun worst ((r row) smallest-side)
+  "Returns the worst aspect ratio of the given row"
   (let ((row-area (area r))
         (smallest-sq (expt smallest-side 2)))
     (if (eq row-area 0)
@@ -44,15 +52,18 @@
              (/ row-area (* (min-area r) smallest-sq)))))))
 
 (defun scale (areas scale)
+  "Scales the given areas list"
   (do ((tail areas (cdr tail)))
       ((endp tail))
       (setf (car tail)
             (* (car tail) scale))))
 
 (defun sum (L)
+  "Returns the sum of the given list"
   (reduce '+ L))
 
 (defun layout ((r row) (rect rectangle))
+  "Returns a list of rectangles representing the areas in the current row positioned and sized to fit in the given rectangle"
   (let ((draw-vertically (> (width rect) (height rect)))
         (len (/ (area r) (min (width rect) (height rect))))
         (x (x rect))
@@ -85,6 +96,7 @@
     (return-from layout rects)))
 
 (defun squarify (areas (rect rectangle))
+  "Returns a list of rectangles representing the given list of areas which have been tiled using the squarified algorithm to fit inside of the given rectangle"
   (let ((total-area (sum areas))
         (scale-factor (* (width rect) (height rect)))
         (smallest-side (min (width rect) (height rect)))
@@ -117,6 +129,5 @@
       
       end)
     
-    (print-object rect t)
     (setf result-rects (nconc result-rects (layout r rect)))
     (return-from squarify result-rects)))
