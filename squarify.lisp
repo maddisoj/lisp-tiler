@@ -64,10 +64,12 @@
       (progn
         (when (> len (width rect))
           (setf len (width rect)))
+        (incf (x rect) len)
         (decf (width rect) len))
       (progn  
         (when (> len (height rect))
           (setf len (height rect)))
+        (incf (y rect) len)
         (decf (height rect) len)))
 
       (dolist (area (areas r))
@@ -113,6 +115,8 @@
       (add-to-row area r)
       (setf best-aspect (worst r smallest-side))
       
-      finally (setf result-rects (nconc result-rects (layout r rect)))
-              (return-from squarify result-rects)
-      end)))
+      end)
+    
+    (print-object rect t)
+    (setf result-rects (nconc result-rects (layout r rect)))
+    (return-from squarify result-rects)))

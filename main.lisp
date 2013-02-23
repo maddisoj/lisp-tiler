@@ -1,4 +1,4 @@
-(load #P"quicklisp/setup.lisp")
+(require "~/quicklisp/setup.lisp")
 
 (ql:quickload "cl-opengl")
 (ql:quickload "cl-glu")
@@ -22,7 +22,8 @@
 
 (defmethod glut:display-window :before ((window tiler-window))
   (gl:clear-color 0.0 0.0 0.0 0.0)
-  (gl:load-identity))
+  (gl:load-identity)
+  (init-2D))
 
 (defmethod glut:display-window ((window tiler-window))
   (gl:clear :color-buffer :depth-buffer)
@@ -36,11 +37,17 @@
 (defmethod glut:keyboard ((window tiler-window) key x y)
     (on-key-press key x y))
 
-(defun main()
+(defun init-2D ()
   (gl:matrix-mode :projection)
   (gl:load-identity)
+  (gl:viewport 0 0 *window-width* *window-height*)
   (gl:ortho 0 *window-width* *window-height* 0 0 1)
-  (gl:matrix-mode :modelview)
+  (gl:matrix-mode :modelview))
+
+(defun main()
+  (dolist (rect *rects*)
+    (print-object rect t)
+    (format t "~%"))
   (glut:display-window (make-instance 'tiler-window)))
 
 (main)

@@ -27,12 +27,12 @@
         (y (y rect))
         (w (width rect))
         (h (height rect)))
-    (gl:with-primitives :quads
-      (gl:color 0.0 0.0 0.0)
-      (gl:vertex x y 0.0) 
-      (gl:vertex (+ x w) y 0.0)
-      (gl:vertex (+ x w) (+ y h) 0.0) 
-      (gl:vertex x (+ y h) 0.0))
+;   (gl:with-primitives :quads
+;     (gl:color 0.0 0.0 0.0)
+;     (gl:vertex x y 0.0) 
+;     (gl:vertex (+ x w) y 0.0)
+;     (gl:vertex (+ x w) (+ y h) 0.0) 
+;     (gl:vertex x (+ y h) 0.0))
 
     (incf x)
     (incf y)
@@ -40,7 +40,7 @@
     (decf h)
 
     (gl:with-primitives :quads
-      (gl:color 0.0 0.0 0.0)
+      (gl:color 1.0 1.0 1.0)
       (gl:vertex x y 0.0) 
       (gl:vertex (+ x w) y 0.0)
       (gl:vertex (+ x w) (+ y h) 0.0) 
